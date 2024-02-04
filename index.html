@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Preview</title>
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<style>
+h2{
+text-align: center;
+}
+form {
+    display: grid;
+}
+.forms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+p{
+    text-align: center;
+}
+
+img#previewImage {
+    display: flex;
+    margin: 0 auto;
+}
+
+body {
+    max-width: 400px;
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+</style>
+<body>
+<h2>3Dぷっくり画像配布</h2>
+
+<div class="forms">
+<!-- チェックボックス -->
+<form id="characterForm">
+    <label><input type="radio" name="character" value="sion" checked> Sion</label>
+    <label><input type="radio" name="character" value="riku"> Riku</label>
+    <label><input type="radio" name="character" value="yushi"> Yushi</label>
+    <label><input type="radio" name="character" value="jaehee"> Jaehee</label>
+    <label><input type="radio" name="character" value="ryo"> Ryo</label>
+    <label><input type="radio" name="character" value="sakuya"> Sakuya</label>
+</form>
+
+<br>
+
+<!-- デザインチェックボックス -->
+<form id="designForm">
+    <label><input type="radio" name="design" value="01" checked> Design 1</label>
+    <label><input type="radio" name="design" value="02"> Design 2</label>
+    <label><input type="radio" name="design" value="03"> Design 3</label>
+    <label><input type="radio" name="design" value="04"> Design 4</label>
+    <label><input type="radio" name="design" value="05"> Design 5</label>
+    <label><input type="radio" name="design" value="06"> Design 6</label>
+</form>
+</div>
+<br>
+
+<!-- プレビュー画像 -->
+<img id="previewImage" onclick="openImageInNewTab()">
+<p><span style="text-decoration: underline;">タップ</span>すると大きい画像が表示されるのでそれを保存して使ってください。</p>
+<p>色は無料アプリでも変えられると思うので変更してアレンジして使ってください！<br>
+    (色違い作るの面倒くさくて！)</p>
+<script>
+    function updatePreview() {
+        // 選択されたキャラクターとデザインを取得
+        const character = document.querySelector('input[name="character"]:checked').value;
+        const design = document.querySelector('input[name="design"]:checked').value;
+
+        // 画像が入っているフォルダー名
+        const folder = 'img/';
+
+        // プレビュー画像のファイル名を組み立て
+        const fileName = folder + character + design + '.webp';
+
+        // プレビュー画像を表示
+        document.getElementById('previewImage').src = fileName;
+    }
+
+    function openImageInNewTab() {
+        // プレビュー画像のファイル名を取得
+        const fileName = document.getElementById('previewImage').src;
+
+        // 新しいタブで元画像を開く
+        window.open(fileName.replace('.webp', '.png'), '_blank');
+    }
+
+    // 初回プレビュー更新
+    updatePreview();
+
+    // ラジオボタンが変更されたときにプレビューを更新
+    document.getElementById('characterForm').addEventListener('change', updatePreview);
+    document.getElementById('designForm').addEventListener('change', updatePreview);
+</script>
+
+</body>
+</html>
